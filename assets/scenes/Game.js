@@ -1,31 +1,55 @@
 export default class Game extends Phaser.Scene {
     constructor() {
-      // key of the scene
-      // the key will be used to start the scene by other scenes
-      super("Game");
+     
+      super("game");
     }
   
     init() {
-      // this is called before the scene is created
-      // init variables
-      // take data passed from other scenes
-      // data object param {}
+      let recoleccion = [
+        {type: "Triangulo", count: 0},
+       {type: "Cuadrado", count: 0}, 
+      {type: "Rombo", count: 0}
+      
+    ];
     }
   
     preload() {
-      // load assets
-     
+      this.load.image("sky","./assets/images/Cielo.png");
+      this.load.image("Personaje","./assets/images/Ninja.png");
+     this.load.image("plataforma","./assets/images/platform.png");
+     this.load.image("Triangulo","./assets/images/Triangulo.png");
+      this.load.image("Cuadrado","./assets/images/Cuadrado.png");
+      this.load.image("Rombo","./assets/images/Rombo.png")
     }
   
     create() {
-      // create game objects
-      
+      this.add.image(400, 300,"sky").setScale(0.555);
+    
+      this.player= this.physics.add.sprite(500,200,"Personaje");
+
+      this.plataforms = this.physics.add.staticGroup();
+      this.plataforms.create(400,570,"plataforma").setScale(2).refreshBody();
+
+      this.physics.add.collider(this.player,this.plataforms);
+
+      this.shapeGroup= this.physics.add.group();
+      this.shapeGroup.create(400,0,"Triangulo").setScale(0.5);
+      this.shapeGroup.create(100,0,"Cuadrado").setScale(0.5);
+      this.shapeGroup.create(500,0,"Rombo").setScale(0.5);
+
+      this.physics.add.collider(this.shapeGroup,this.plataforms);
+
+      this.physics.add.overlap(this.player,this.shapeGroup,this.collectShape,null,this)
       };
   
       
     
   
     update() {
-      // update game objects
+      
+    }
+    collectShape(player, shape){
+      console.log("Figura recolectada");
+      shape.disableBody(true,true)
     }
   }
