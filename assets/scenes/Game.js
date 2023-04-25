@@ -1,4 +1,4 @@
-import { PLAYER_MOVEMENTS } from "../../config.js";
+import { PLAYER_MOVEMENTS, SHAPE_DELAY, SHAPES, CUADRADO, TRIANGULO, ROMBO } from "../../config.js";
 export default class Game extends Phaser.Scene {
     constructor() {
      
@@ -18,9 +18,9 @@ export default class Game extends Phaser.Scene {
       this.load.image("sky","./assets/images/Cielo.png");
       this.load.image("Personaje","./assets/images/Ninja.png");
       this.load.image("plataforma","./assets/images/platform.png");
-      this.load.image("Triangulo","./assets/images/Triangulo.png");
-      this.load.image("Cuadrado","./assets/images/Cuadrado.png");
-      this.load.image("Rombo","./assets/images/Rombo.png")
+      this.load.image(TRIANGULO, "./assets/images/Triangulo.png");
+      this.load.image(CUADRADO, "./assets/images/Cuadrado.png");
+      this.load.image(ROMBO, "./assets/images/Rombo.png");
     }
   
     create() {
@@ -34,16 +34,19 @@ export default class Game extends Phaser.Scene {
       this.physics.add.collider(this.player,this.plataforms);
 
       this.shapeGroup= this.physics.add.group();
-      this.shapeGroup.create(400,0,"Triangulo").setScale(0.5);
-      this.shapeGroup.create(100,0,"Cuadrado").setScale(0.5);
-      this.shapeGroup.create(500,0,"Rombo").setScale(0.5);
-
+   
       this.physics.add.collider(this.shapeGroup,this.plataforms);
 
       this.physics.add.overlap(this.player,this.shapeGroup,this.collectShape,null,this);
 
       this.cursors = this.input.keyboard.createCursorKeys();
 
+      this.time.addEvent({
+        delay: SHAPE_DELAY,
+        callback: this.addShape,
+        callbackScope: this,
+        loop: true,
+      });
       };
   
       
@@ -68,5 +71,17 @@ export default class Game extends Phaser.Scene {
     collectShape(player, shape){
       console.log("Figura recolectada");
       shape.disableBody(true,true)
+    }
+
+    addShape() {
+      
+
+      const randomShape = Phaser.Math.RND.pick(SHAPES);
+      console.log(randomShape);
+
+      const randomX = Phaser.Math.RND.between(0, 800);
+      console.log (randomX, randomShape);
+
+      this.shapeGroup.create(randomX, 0, randomShape);
     }
   }
