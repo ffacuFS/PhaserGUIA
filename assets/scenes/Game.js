@@ -1,3 +1,4 @@
+import { PLAYER_MOVEMENTS } from "../../config.js";
 export default class Game extends Phaser.Scene {
     constructor() {
      
@@ -16,8 +17,8 @@ export default class Game extends Phaser.Scene {
     preload() {
       this.load.image("sky","./assets/images/Cielo.png");
       this.load.image("Personaje","./assets/images/Ninja.png");
-     this.load.image("plataforma","./assets/images/platform.png");
-     this.load.image("Triangulo","./assets/images/Triangulo.png");
+      this.load.image("plataforma","./assets/images/platform.png");
+      this.load.image("Triangulo","./assets/images/Triangulo.png");
       this.load.image("Cuadrado","./assets/images/Cuadrado.png");
       this.load.image("Rombo","./assets/images/Rombo.png")
     }
@@ -39,7 +40,10 @@ export default class Game extends Phaser.Scene {
 
       this.physics.add.collider(this.shapeGroup,this.plataforms);
 
-      this.physics.add.overlap(this.player,this.shapeGroup,this.collectShape,null,this)
+      this.physics.add.overlap(this.player,this.shapeGroup,this.collectShape,null,this);
+
+      this.cursors = this.input.keyboard.createCursorKeys();
+
       };
   
       
@@ -47,6 +51,19 @@ export default class Game extends Phaser.Scene {
   
     update() {
       
+      if (this.cursors.left.isDown) {
+        this.player.setVelocityX(-PLAYER_MOVEMENTS.x);
+      } else if (this.cursors.right.isDown) {
+        this.player.setVelocityX(PLAYER_MOVEMENTS.x) 
+      } else {
+        this.player.setVelocityX(0)
+      }
+
+      if (this.cursors.up.isDown && this.player.body.touching.down)
+      this.player.setVelocityY(-PLAYER_MOVEMENTS.y)
+        if (this.cursors.down.isDown) {
+          this.player.setVelocityY(160)
+        }
     }
     collectShape(player, shape){
       console.log("Figura recolectada");
