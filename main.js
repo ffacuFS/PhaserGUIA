@@ -1,4 +1,5 @@
-
+import Winner from "./assets/scenes/winner.js";
+import gameOver from "./assets/scenes/gameOver.js";
 import EscenaVacia from "./assets/scenes/escenavacia.js";
 import Game from "./assets/scenes/Game.js";
 
@@ -22,14 +23,14 @@ const config = {
   physics: {
     default: "arcade",
     arcade: {
-      gravity: { y: 200 },
-      debug: true,
+      gravity: { y: 400 },
+      debug: false,
     },
   },
   // List of scenes to load
   // Only the first scene will be shown
   // Remember to import the scene before adding it to the list
-  scene: [Game, EscenaVacia,],
+  scene: [ Game,Winner ,gameOver],
 };
 
 // Create a new Phaser game instance

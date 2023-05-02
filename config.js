@@ -1,6 +1,6 @@
 const PLAYER_MOVEMENTS= {
     x: 160,
-    y: 140,
+    y: 180,
 };
 
 const SHAPE_DELAY = 3000;

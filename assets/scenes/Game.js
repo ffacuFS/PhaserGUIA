@@ -11,6 +11,9 @@ export default class Game extends Phaser.Scene {
         ["Cuadrado"]: {count: 0, score: 20},
         ["Rombo"]: {count: 0, score: 30},
       };
+
+      this.isWinner= false;
+      this.isGameOver= false;
     }
   
     preload() {
@@ -46,13 +49,26 @@ export default class Game extends Phaser.Scene {
         callbackScope: this,
         loop: true,
       });
+
+      this.scoreText=this.add.text(16, 16,"T: 0 / C: 0 / R: 0", {
+        fontSize: "20px",
+        fill: "#270",
+      });
+
       };
   
       
     
   
     update() {
-      
+
+      if (this.isWinner) {
+        this.scene.start("winner");
+     }
+     if (this.isGameOver) {
+      this.scence.start("gameOver");
+     }
+
       if (this.cursors.left.isDown) {
         this.player.setVelocityX(-PLAYER_MOVEMENTS.x);
       } else if (this.cursors.right.isDown) {
@@ -66,6 +82,7 @@ export default class Game extends Phaser.Scene {
         if (this.cursors.down.isDown) {
           this.player.setVelocityY(160)
         }
+
     }
     collectShape(player, shape){
       console.log("Figura recolectada");
@@ -75,6 +92,18 @@ export default class Game extends Phaser.Scene {
       console.log("Recolectamos un ",shapeName, "!!!");
       this.shapeRecolect[shapeName].count++;
       console.log(this.shapeRecolect);
+
+      this.scoreText.setText(
+        "T: "+ this.shapeRecolect[TRIANGULO].count + " / C: " + this.shapeRecolect[CUADRADO].count + " / R: "+ this.shapeRecolect[ROMBO].count
+      );
+        if (
+          this.shapeRecolect[ROMBO].count >= 2 &&
+          this.shapeRecolect[TRIANGULO].count >= 2 &&
+          this.shapeRecolect[CUADRADO].count >= 2 
+        ) {
+          this.isWinner= true;
+        }
+
     }
 
     addShape() {
