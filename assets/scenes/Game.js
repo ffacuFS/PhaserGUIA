@@ -14,6 +14,7 @@ export default class Game extends Phaser.Scene {
 
       this.isWinner= false;
       this.isGameOver= false;
+      this.isTimer= 30; 
     }
   
     preload() {
@@ -55,6 +56,13 @@ export default class Game extends Phaser.Scene {
         fill: "#270",
       });
 
+      this.time.addEvent({
+        delay: 1000,
+        callback: this.updateTimer ,
+        callbackScope: this,
+        loop: true,
+      })
+      this.time = this.add.text(700,16, "tiempo: "+ this.isTimer,)
       };
   
       
@@ -81,8 +89,9 @@ export default class Game extends Phaser.Scene {
       this.player.setVelocityY(-PLAYER_MOVEMENTS.y)
         if (this.cursors.down.isDown) {
           this.player.setVelocityY(160)
-        }
+        
 
+      }
     }
     collectShape(player, shape){
       console.log("Figura recolectada");
@@ -102,7 +111,7 @@ export default class Game extends Phaser.Scene {
           this.shapeRecolect[CUADRADO].count >= 2 
         ) {
           this.isWinner= true;
-        }
+        };
 
     }
 
@@ -117,4 +126,14 @@ export default class Game extends Phaser.Scene {
 
       this.shapeGroup.create(randomX, 0, randomShape);
     }
+    updateTimer() {
+      this.isTimer--
+      this.time.setText(
+        "Tiempo "+ this.isTimer
+      )
+      if (this.isTimer == 0) {
+        this.isGameOver = true;
+      }
+    }
+
   }
