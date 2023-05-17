@@ -1,7 +1,7 @@
 import Winner from "./assets/scenes/winner.js";
-import gameOver from "./assets/scenes/gameOver.js";
 import EscenaVacia from "./assets/scenes/escenavacia.js";
 import Game from "./assets/scenes/Game.js";
+import Perdiste from "./assets/scenes/GameOver.js";
 
 // Create a new Phaser config object
 const config = {
@@ -30,7 +30,7 @@ const config = {
   // List of scenes to load
   // Only the first scene will be shown
   // Remember to import the scene before adding it to the list
-  scene: [ Game,Winner ,gameOver],
+  scene: [ Game,Winner ,Perdiste],
 };
 
 // Create a new Phaser game instance

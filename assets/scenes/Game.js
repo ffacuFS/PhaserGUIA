@@ -33,12 +33,14 @@ export default class Game extends Phaser.Scene {
 
       this.plataforms = this.physics.add.staticGroup();
       this.plataforms.create(400,570,"plataforma").setScale(2).refreshBody();
+      this.plataforms.create(200, 400,"plataforma").setScale(0.4).refreshBody();
+      this.plataforms.create(700, 290,"plataforma").setScale(0.8).refreshBody();
 
       this.physics.add.collider(this.player,this.plataforms);
 
       this.shapeGroup= this.physics.add.group();
    
-      this.physics.add.collider(this.shapeGroup,this.plataforms);
+      this.physics.add.collider(this.shapeGroup,this.plataforms,);
 
       this.physics.add.overlap(this.player,this.shapeGroup,this.collectShape,null,this);
 
@@ -74,7 +76,7 @@ export default class Game extends Phaser.Scene {
         this.scene.start("winner");
      }
      if (this.isGameOver) {
-      this.scence.start("gameOver");
+      this.scence.start("GameOver");
      }
 
       if (this.cursors.left.isDown) {
@@ -129,7 +131,7 @@ export default class Game extends Phaser.Scene {
     updateTimer() {
       this.isTimer--
       this.time.setText(
-        "Tiempo "+ this.isTimer
+        "Tiempo: "+ this.isTimer
       )
       if (this.isTimer == 0) {
         this.isGameOver = true;
