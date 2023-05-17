@@ -7,14 +7,15 @@ export default class Game extends Phaser.Scene {
   
     init() {
       this.shapeRecolect = {
-        ["Triangulo"]: {count: 0, score: 10},
-        ["Cuadrado"]: {count: 0, score: 20},
-        ["Rombo"]: {count: 0, score: 30},
+        "Triangulo": {count: 0 ,puntaje: 10},
+        "Cuadrado":  {count: 0, puntaje: 20},
+        "Rombo":  {count:0 , puntaje: 30},
       };
 
       this.isWinner= false;
       this.isGameOver= false;
       this.isTimer= 30; 
+      this.score=0;
     }
   
     preload() {
@@ -53,7 +54,7 @@ export default class Game extends Phaser.Scene {
         loop: true,
       });
 
-      this.scoreText=this.add.text(16, 16,"T: 0 / C: 0 / R: 0", {
+      this.scoreText=this.add.text(16, 16,"score: ", {
         fontSize: "20px",
         fill: "#270",
       });
@@ -64,19 +65,18 @@ export default class Game extends Phaser.Scene {
         callbackScope: this,
         loop: true,
       })
-      this.time = this.add.text(700,16, "tiempo: "+ this.isTimer,)
+      this.time = this.add.text(700,16, "tiempo: "+ this.isTimer,);
+
       };
   
-      
-    
-  
+
     update() {
 
       if (this.isWinner) {
         this.scene.start("winner");
-     }
+      }
      if (this.isGameOver) {
-      this.scence.start("GameOver");
+      this.scence.start("gameOver");
      }
 
       if (this.cursors.left.isDown) {
@@ -101,16 +101,16 @@ export default class Game extends Phaser.Scene {
 
       const shapeName = shape.texture.key;
       console.log("Recolectamos un ",shapeName, "!!!");
-      this.shapeRecolect[shapeName].count++;
+      this.shapeRecolect[shapeName].score;
       console.log(this.shapeRecolect);
-
+      this.score+=this.shapeRecolect[shapeName].puntaje;
+  
       this.scoreText.setText(
-        "T: "+ this.shapeRecolect[TRIANGULO].count + " / C: " + this.shapeRecolect[CUADRADO].count + " / R: "+ this.shapeRecolect[ROMBO].count
+        "score: "+ this.score
       );
         if (
-          this.shapeRecolect[ROMBO].count >= 2 &&
-          this.shapeRecolect[TRIANGULO].count >= 2 &&
-          this.shapeRecolect[CUADRADO].count >= 2 
+          this.score >= 100 
+          
         ) {
           this.isWinner= true;
         };

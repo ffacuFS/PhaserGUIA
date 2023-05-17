@@ -1,4 +1,4 @@
-export default class Perdiste extends Phaser.Scene {
+export default class GameOver extends Phaser.Scene {
     constructor() {
        // key of the scene
            // the key will be used to start the scene by other scenes
