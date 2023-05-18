@@ -1,8 +1,8 @@
-export default class GameOver extends Phaser.Scene {
+export default class Defeat extends Phaser.Scene {
     constructor() {
        // key of the scene
            // the key will be used to start the scene by other scenes
-           super("gameOver");
+           super("defeat");
        }
    
        init() {
@@ -18,7 +18,7 @@ export default class GameOver extends Phaser.Scene {
    
        create() {
            // create game objects
-           this.add.text = this.add.text(180, 250, "gameOver", {
+           this.add.text = this.add.text(180, 250, "Perdiste", {
                fontSize: "80px",
                
            });

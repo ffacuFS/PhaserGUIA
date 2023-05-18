@@ -1,4 +1,4 @@
-import { PLAYER_MOVEMENTS, SHAPE_DELAY, SHAPES, CUADRADO, TRIANGULO, ROMBO } from "../../config.js";
+import { PLAYER_MOVEMENTS, SHAPE_DELAY, SHAPES, CUADRADO, TRIANGULO, ROMBO,ESTRELLA } from "../../config.js";
 export default class Game extends Phaser.Scene {
     constructor() {
      
@@ -10,10 +10,11 @@ export default class Game extends Phaser.Scene {
         "Triangulo": {count: 0 ,puntaje: 10},
         "Cuadrado":  {count: 0, puntaje: 20},
         "Rombo":  {count:0 , puntaje: 30},
+        "estrella": {count:0 , puntaje: -40}
       };
 
       this.isWinner= false;
-      this.isGameOver= false;
+      this.isDefeat= false;
       this.isTimer= 30; 
       this.score=0;
     }
@@ -25,6 +26,7 @@ export default class Game extends Phaser.Scene {
       this.load.image(TRIANGULO, "./assets/images/Triangulo.png");
       this.load.image(CUADRADO, "./assets/images/Cuadrado.png");
       this.load.image(ROMBO, "./assets/images/Rombo.png");
+      this.load.image(ESTRELLA,"./assets/images/estrella.png");
     }
   
     create() {
@@ -71,13 +73,12 @@ export default class Game extends Phaser.Scene {
   
 
     update() {
-
       if (this.isWinner) {
         this.scene.start("winner");
       }
-     if (this.isGameOver) {
-      this.scence.start("gameOver");
-     }
+      if (this.isDefeat) {
+      this.scene.start("defeat");
+      }
 
       if (this.cursors.left.isDown) {
         this.player.setVelocityX(-PLAYER_MOVEMENTS.x);
@@ -131,10 +132,10 @@ export default class Game extends Phaser.Scene {
     updateTimer() {
       this.isTimer--
       this.time.setText(
-        "Tiempo: "+ this.isTimer
+        "Tiempo: "+ this.isTimer,
       )
       if (this.isTimer == 0) {
-        this.isGameOver = true;
+        this.isDefeat = true;
       }
     }
 
